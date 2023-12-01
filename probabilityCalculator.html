@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Probability calculator</title>
+  <script src="./probabilityCalculator.js"></script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="container">
+    <div class="newVarContainer">
+      <p>New variable</p>
+      <label for="name">Name</label>
+      <input type="text" name="name" id="name">
+
+      <label for="name">Min</label>
+      <input type="number" name="min" id="min" min="0" max="100" value="0">
+
+      <label for="name">Max</label>
+      <input type="number" name="max" id="max" min="0" max="100" value="0">
+
+      <label for="name">Weight</label>
+      <input type="number" name="weight" id="weight" min="0" max="1" step="0.01" value="1">
+
+      <button onclick="addVariable()">Add variable</button>
+    </div>
+
+    <div class="buttons">
+      <button onclick="calculate()">Calculate default</button>
+      <button onclick="calculateCustom()">Calc custom</button>
+    </div>
+
+    <p class="range"></p>
+
+    <p>Custom vars here</p>
+    <div class="vars"></div>
+  </div>
+</body>
+</html>
