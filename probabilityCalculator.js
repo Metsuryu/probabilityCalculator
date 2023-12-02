@@ -107,37 +107,42 @@ function calculateSocietalWeights(mode = 'min') {
 function calculate() {
   const misalignmentMin = calculateMisalignmentLikelihood('min');
   const societalWeightsMin = calculateSocietalWeights('min');
-  console.log('societalWeightsMin', societalWeightsMin);
   const misalignmentMax = calculateMisalignmentLikelihood('max');
   const societalWeightsMax = calculateSocietalWeights('max');
 
   const notSolvedMin = misalignmentMin + (societalWeightsMin.s / 100);
-  // const minSolved = (100 - notSolvedMin);
-  const solvedNotAppliedOrMisuseMin = (societalWeightsMin.a / 100);
-  console.log('notSolvedMin', notSolvedMin);
-  console.log('solvedNotAppliedOrMisuseMin', solvedNotAppliedOrMisuseMin);
+  const minSolved = (100 - notSolvedMin);
+  const solvedNotAppliedOrMisuseMin = minSolved - (minSolved * (societalWeightsMin.a / 100));
 
   const notSolvedMax = misalignmentMax + (societalWeightsMax.s / 100);
-  // const maxSolved = (100 - notSolvedMax);
-  const solvedNotAppliedOrMisuseMax = (societalWeightsMax.a / 100);
-  console.log('notSolvedMax', notSolvedMax);
-  console.log('solvedNotAppliedOrMisuseMax', solvedNotAppliedOrMisuseMax);
+  const maxSolved = (100 - notSolvedMax);
+  const solvedNotAppliedOrMisuseMax = maxSolved - (maxSolved * (societalWeightsMax.a / 100));
 
   const minRes = (notSolvedMin + solvedNotAppliedOrMisuseMin);
   const maxRes = (notSolvedMax + solvedNotAppliedOrMisuseMax);
 
-  const range = `Range: ${minRes.toFixed(1)}% - ${maxRes.toFixed(1)}%`;
-  console.log(range);
+  const uncertainty = 30;
+
+  const range = `
+  <p>Not solved (total) range: ${minRes.toFixed(1)}% - ${maxRes.toFixed(1)}%</p>
+  <p>Solved but not applied or misused range: ${solvedNotAppliedOrMisuseMax.toFixed(1)}% - ${solvedNotAppliedOrMisuseMin.toFixed(1)}%</p>
+  <p>Solved range: ${maxSolved.toFixed(1)}% - ${minSolved.toFixed(1)}%</p>
+  <p>Uncertainty on all values: ${uncertainty}%</p>`;
   document.querySelector('.range').innerHTML = range;
 }
 
-const customVars = [];
+let customVars = [];
 
 function addVariableElToDOM (name, min, max, weight) {
   const customVarsContainer = document.querySelector('.vars');
-  console.log('customVarsContainer', customVarsContainer);
   const container = document.createElement('div');
   container.classList.add('customVar');
+  container.id = name;
+
+  const removeCustomVar = () => {
+    customVars = customVars.filter(el => el.name !== name);
+    document.querySelector(`#${name}`)?.remove();
+  };
 
   const nameEl = document.createElement('p');
   nameEl.innerHTML = `Name: ${name}`;
@@ -147,6 +152,11 @@ function addVariableElToDOM (name, min, max, weight) {
   maxEl.innerHTML = `Max: ${max}`;;
   const weightEl = document.createElement('p');
   weightEl.innerHTML = `Weight: ${weight}`;
+  const remove = document.createElement('div');
+  remove.classList.add('removeEl');
+  remove.onclick = removeCustomVar.bind(this);
+  remove.innerHTML = '[X]';
+  container.append(remove);
   container.append(nameEl);
   container.append(minEl);
   container.append(maxEl);
@@ -190,4 +200,16 @@ function calculateCustom() {
   const range = `Range: ${misalignmentMin.toFixed(1)}% - ${misalignmentMax.toFixed(1)}%`;
   console.log(range);
   document.querySelector('.range').innerHTML = range;
+}
+
+function saveCustomToCookies() {
+  localStorage.setItem('customVars', JSON.stringify(customVars));
+}
+
+function loadCustomVars() {
+  const loaded = JSON.parse(localStorage.getItem('customVars'));
+  customVars = loaded;
+  loaded.forEach(loadedVar => {
+    addVariableElToDOM(loadedVar.name, loadedVar.min, loadedVar.max, loadedVar.weight);
+  });
 }
