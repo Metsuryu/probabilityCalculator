@@ -20,33 +20,33 @@ function calculateMisalignmentLikelihood(mode = 'min') {
   const misalignmentImpossible = 100 - ((orthogonalityTrue + moralRealismTrue) / 2);
 
   const instrumentalConvergence = {
-    min: 80,
-    max: 95,
+    min: 25,
+    max: 85,
     weight: 1
   };
 
   const AGINotAchievedWithRobustMethods = {
-    min: 55,
+    min: 35,
     max: 80,
-    weight: 1
+    weight: 0.8
   };
 
   const interpFails = {
-    min: 60,
+    min: 25,
     max: 75,
-    weight: 0.9
+    weight: 0.6
   };
 
   const deceptiveAlignment = {
     min: 5,
-    max: 80,
-    weight: 1
+    max: 75,
+    weight: 0.8
   };
 
   const corrigibility = {
-    min: 50,
+    min: 20,
     max: 55,
-    weight: 0.6
+    weight: 0.8
   };
 
   const corrigibilityUseless = {
@@ -75,8 +75,8 @@ function calculateMisalignmentLikelihood(mode = 'min') {
 
 function calculateSocietalWeights(mode = 'min') {
   const noPause = {
-    min: 98,
-    max: 99,
+    min: 88,
+    max: 98,
     weight: 1
   };
 
@@ -87,13 +87,13 @@ function calculateSocietalWeights(mode = 'min') {
   };
 
   const otherS = {
-    min: 60,
+    min: 40,
     max: 65,
     weight: 0.1
   };
 
   const otherA = {
-    min: 60,
+    min: 40,
     max: 65,
     weight: 0.6
   };
@@ -102,6 +102,14 @@ function calculateSocietalWeights(mode = 'min') {
     s: getAvg([noPause, noCollab, otherS], mode),
     a: getAvg([noPause, noCollab, otherA], mode),
   };
+}
+
+function getRange(num1, num2) {
+  if (num1 < num2) {
+    return `${num1.toFixed(1)}% - ${num2.toFixed(1)}%`;
+  } else {
+    return `${num2.toFixed(1)}% - ${num1.toFixed(1)}%`;
+  }
 }
 
 function calculate() {
@@ -124,9 +132,10 @@ function calculate() {
   const uncertainty = 30;
 
   const range = `
-  <p>Not solved (total) range: ${minRes.toFixed(1)}% - ${maxRes.toFixed(1)}%</p>
-  <p>Solved but not applied or misused range: ${solvedNotAppliedOrMisuseMax.toFixed(1)}% - ${solvedNotAppliedOrMisuseMin.toFixed(1)}%</p>
-  <p>Solved range: ${maxSolved.toFixed(1)}% - ${minSolved.toFixed(1)}%</p>
+  <p>Not solved range: ${getRange(notSolvedMin, notSolvedMax)}</p>
+  <p>Solved but not applied or misused range: ${getRange(solvedNotAppliedOrMisuseMin, solvedNotAppliedOrMisuseMax)}</p>
+  <p>Not solved, applied, or misused (total) range: ${getRange(minRes, maxRes)}</p>
+  <p>Solved range: ${getRange(minSolved, maxSolved)}</p>
   <p>Uncertainty on all values: ${uncertainty}%</p>`;
   document.querySelector('.range').innerHTML = range;
 }
@@ -197,7 +206,7 @@ function calculateCustom() {
   const misalignmentMin = getAvg(customVars, 'min');
   const misalignmentMax = getAvg(customVars, 'max');
 
-  const range = `Range: ${misalignmentMin.toFixed(1)}% - ${misalignmentMax.toFixed(1)}%`;
+  const range = `Range: ${getRange(misalignmentMin, misalignmentMax)}`;
   console.log(range);
   document.querySelector('.range').innerHTML = range;
 }
