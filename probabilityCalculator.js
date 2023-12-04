@@ -126,8 +126,11 @@ function calculate() {
   const maxSolved = (100 - notSolvedMax);
   const solvedNotAppliedOrMisuseMax = maxSolved - (maxSolved * (societalWeightsMax.a / 100));
 
-  const minRes = (notSolvedMin + solvedNotAppliedOrMisuseMin);
-  const maxRes = (notSolvedMax + solvedNotAppliedOrMisuseMax);
+  const minSNAM = solvedNotAppliedOrMisuseMin < solvedNotAppliedOrMisuseMax ? solvedNotAppliedOrMisuseMin : solvedNotAppliedOrMisuseMax;
+  const maxSNAM = solvedNotAppliedOrMisuseMin < solvedNotAppliedOrMisuseMax ? solvedNotAppliedOrMisuseMax : solvedNotAppliedOrMisuseMin;
+
+  const minRes = (notSolvedMin + minSNAM);
+  const maxRes = (notSolvedMax + maxSNAM);
 
   const uncertainty = 30;
 
