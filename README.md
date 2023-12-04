@@ -1,4 +1,9 @@
-Values might be outdated, see .js for latest values.
+Calculator to calculate probabilities.
+Can add named variables with a min, max, and weight values, then they get averaged out by weight, and the resulting range is shown.
+
+I added a preset for my p(doom from AI) calculation, where I calculate the probabilities for AI going catastrophically wrong.
+
+Values in this readme might be outdated, see .js for latest values, this is just plain text to roughly explain the concept.
 
 # Assumptions
 - Orthogonality is true = 100-ε%
