@@ -81,26 +81,28 @@ function calculateSocietalWeights(mode = 'min') {
   };
 
   const noCollab = {
-    min: 85,
-    max: 90,
+    min: 86,
+    max: 91,
     weight: 1
   };
 
-  const otherS = {
-    min: 40,
-    max: 65,
+  /* Influences probability of solving alignment */
+  const otherSolve = {
+    min: 39,
+    max: 64,
     weight: 0.1
   };
 
-  const otherA = {
-    min: 40,
-    max: 65,
+  /* Influences probability of applying alignment */
+  const otherApply = {
+    min: 39,
+    max: 64,
     weight: 0.6
   };
 
   return {
-    s: getAvg([noPause, noCollab, otherS], mode),
-    a: getAvg([noPause, noCollab, otherA], mode),
+    solve: getAvg([noPause, noCollab, otherSolve], mode),
+    apply: getAvg([noPause, noCollab, otherApply], mode),
   };
 }
 
@@ -118,13 +120,13 @@ function calculate() {
   const misalignmentMax = calculateMisalignmentLikelihood('max');
   const societalWeightsMax = calculateSocietalWeights('max');
 
-  const notSolvedMin = misalignmentMin + (societalWeightsMin.s / 100);
+  const notSolvedMin = misalignmentMin + (societalWeightsMin.solve / 100);
   const minSolved = (100 - notSolvedMin);
-  const solvedNotAppliedOrMisuseMin = minSolved - (minSolved * (societalWeightsMin.a / 100));
+  const solvedNotAppliedOrMisuseMin = minSolved - (minSolved * (societalWeightsMin.apply / 100));
 
-  const notSolvedMax = misalignmentMax + (societalWeightsMax.s / 100);
+  const notSolvedMax = misalignmentMax + (societalWeightsMax.solve / 100);
   const maxSolved = (100 - notSolvedMax);
-  const solvedNotAppliedOrMisuseMax = maxSolved - (maxSolved * (societalWeightsMax.a / 100));
+  const solvedNotAppliedOrMisuseMax = maxSolved - (maxSolved * (societalWeightsMax.apply / 100));
 
   const minSNAM = solvedNotAppliedOrMisuseMin < solvedNotAppliedOrMisuseMax ? solvedNotAppliedOrMisuseMin : solvedNotAppliedOrMisuseMax;
   const maxSNAM = solvedNotAppliedOrMisuseMin < solvedNotAppliedOrMisuseMax ? solvedNotAppliedOrMisuseMax : solvedNotAppliedOrMisuseMin;
