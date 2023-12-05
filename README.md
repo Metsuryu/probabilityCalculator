@@ -1,4 +1,7 @@
-Calculator to calculate probabilities.
+Calculator of probabilities.
+
+https://metsuryu.github.io/probabilityCalculator/
+
 Can add named variables with a min, max, and weight values, then they get averaged out by weight, and the resulting range is shown.
 
 I added a preset for my p(doom from AI) calculation, where I calculate the probabilities for AI going catastrophically wrong.
