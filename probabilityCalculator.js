@@ -20,19 +20,19 @@ function calculateMisalignmentLikelihood(mode = 'min') {
   const misalignmentImpossible = 100 - ((orthogonalityTrue + moralRealismTrue) / 2);
 
   const instrumentalConvergence = {
-    min: 25,
+    min: 24,
     max: 85,
     weight: 1
   };
 
   const AGINotAchievedWithRobustMethods = {
-    min: 35,
+    min: 34,
     max: 80,
     weight: 0.8
   };
 
   const interpFails = {
-    min: 25,
+    min: 24,
     max: 75,
     weight: 0.6
   };
@@ -44,7 +44,7 @@ function calculateMisalignmentLikelihood(mode = 'min') {
   };
 
   const corrigibility = {
-    min: 20,
+    min: 19,
     max: 55,
     weight: 0.8
   };
@@ -56,7 +56,7 @@ function calculateMisalignmentLikelihood(mode = 'min') {
   };
 
   const unforeseenConsequences = {
-    min: 15,
+    min: 14,
     max: 20,
     weight: 0.5
   };
@@ -75,28 +75,28 @@ function calculateMisalignmentLikelihood(mode = 'min') {
 
 function calculateSocietalWeights(mode = 'min') {
   const noPause = {
-    min: 88,
+    min: 89,
     max: 98,
     weight: 1
   };
 
   const noCollab = {
-    min: 86,
-    max: 91,
+    min: 85,
+    max: 90,
     weight: 1
   };
 
   /* Influences probability of solving alignment */
   const otherSolve = {
-    min: 39,
-    max: 64,
+    min: 38,
+    max: 63,
     weight: 0.1
   };
 
   /* Influences probability of applying alignment */
   const otherApply = {
-    min: 39,
-    max: 64,
+    min: 40,
+    max: 65,
     weight: 0.6
   };
 
