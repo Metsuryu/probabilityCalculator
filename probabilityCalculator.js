@@ -20,38 +20,38 @@ function calculateMisalignmentLikelihood(mode = 'min') {
   const misalignmentImpossible = 100 - ((orthogonalityTrue + moralRealismTrue) / 2);
 
   const instrumentalConvergence = {
-    min: 24,
-    max: 85,
-    weight: 1
+    min: 85,
+    max: 95,
+    weight: 0.8
   };
 
   const AGINotAchievedWithRobustMethods = {
-    min: 34,
+    min: 20,
     max: 80,
     weight: 0.8
   };
 
   const interpFails = {
-    min: 24,
-    max: 75,
+    min: 14,
+    max: 65,
     weight: 0.6
   };
 
   const deceptiveAlignment = {
     min: 5,
-    max: 75,
+    max: 65,
     weight: 0.8
   };
 
   const corrigibility = {
     min: 19,
-    max: 55,
+    max: 45,
     weight: 0.8
   };
 
   const corrigibilityUseless = {
     min: 15,
-    max: 90,
+    max: 70,
     weight: 0.45
   };
 
@@ -74,14 +74,8 @@ function calculateMisalignmentLikelihood(mode = 'min') {
 }
 
 function calculateSocietalWeights(mode = 'min') {
-  const noPause = {
-    min: 89,
-    max: 98,
-    weight: 1
-  };
-
   const noCollab = {
-    min: 85,
+    min: 80,
     max: 90,
     weight: 1
   };
@@ -95,14 +89,14 @@ function calculateSocietalWeights(mode = 'min') {
 
   /* Influences probability of applying alignment */
   const otherApply = {
-    min: 40,
+    min: 35,
     max: 65,
     weight: 0.6
   };
 
   return {
-    solve: getAvg([noPause, noCollab, otherSolve], mode),
-    apply: getAvg([noPause, noCollab, otherApply], mode),
+    solve: getAvg([noCollab, otherSolve], mode),
+    apply: getAvg([noCollab, otherApply], mode),
   };
 }
 
