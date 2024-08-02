@@ -22,24 +22,24 @@ function calculateMisalignmentLikelihood(mode = 'min') {
   const instrumentalConvergence = {
     min: 85,
     max: 95,
-    weight: 0.8
+    weight: 0.5
   };
 
   const AGINotAchievedWithRobustMethods = {
     min: 20,
-    max: 80,
+    max: 75,
     weight: 0.8
   };
 
   const interpFails = {
     min: 14,
-    max: 65,
-    weight: 0.6
+    max: 55,
+    weight: 0.5
   };
 
   const deceptiveAlignment = {
     min: 5,
-    max: 65,
+    max: 55,
     weight: 0.8
   };
 
@@ -51,7 +51,7 @@ function calculateMisalignmentLikelihood(mode = 'min') {
 
   const corrigibilityUseless = {
     min: 15,
-    max: 70,
+    max: 60,
     weight: 0.45
   };
 
@@ -75,7 +75,7 @@ function calculateMisalignmentLikelihood(mode = 'min') {
 
 function calculateSocietalWeights(mode = 'min') {
   const noCollab = {
-    min: 80,
+    min: 75,
     max: 90,
     weight: 1
   };
@@ -89,8 +89,8 @@ function calculateSocietalWeights(mode = 'min') {
 
   /* Influences probability of applying alignment */
   const otherApply = {
-    min: 35,
-    max: 65,
+    min: 45,
+    max: 75,
     weight: 0.6
   };
 
